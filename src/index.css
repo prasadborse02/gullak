@@ -1,0 +1,173 @@
+@import "tailwindcss";
+
+@font-face { font-family: "Nunito"; font-style: normal; font-weight: 400 700; font-display: swap; src: url("/fonts/nunito.woff2") format("woff2"); }
+@font-face { font-family: "Fraunces"; font-style: normal; font-weight: 500 600; font-display: swap; src: url("/fonts/fraunces.woff2") format("woff2"); }
+
+/* Three themes, each light and dark. Tokens are scoped by [data-palette] and [data-theme] on any
+   element (not only :root) so the theme picker can render live previews of the other palettes.
+   Default (no attribute) is Clay Shelf, light. Order matters: palette blocks come after Clay blocks. */
+
+@theme {
+  --font-sans: "Nunito", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Fraunces", ui-serif, Georgia, "Times New Roman", serif;
+
+  /* Clay Shelf, light: cream paper, terracotta, brass. */
+  --color-cream: #f6efe4;
+  --color-cream-2: #efe5d5;
+  --color-paper: #fffaf2;
+  --color-ink: #2a211c;
+  --color-ink-2: #6b5d53;
+  --color-ink-3: #75675c;
+  --color-line: #e4d8c6;
+  --color-clay: #b5522d;
+  --color-clay-2: #9a4526;
+  --color-clay-text: #9a4526;
+  --color-clay-soft: #f3d9cc;
+  --color-coin: #e0a93d;
+  --color-coin-2: #805913;
+  --color-coin-soft: #f9e9c3;
+  --color-leaf: #3d6547;
+  --color-leaf-soft: #dceadf;
+  --color-sky: #3b5c85;
+  --color-sky-soft: #dbe5f1;
+  --color-shadow: rgba(42, 33, 28, .12);
+  --paper-rule: none;
+
+  --radius-xl: 1.25rem;
+  --radius-2xl: 1.75rem;
+
+  --animate-bump: bump 420ms cubic-bezier(.34,1.56,.64,1);
+  --animate-glow: glow 900ms ease-out;
+  --animate-rise: rise 320ms cubic-bezier(.16,1,.3,1) both;
+  --animate-drop: drop 260ms cubic-bezier(.16,1,.3,1) both;
+
+  /* ponytail: overshoot is deliberate for the coin-landing settle; swap for ease-out-quint if it reads as bouncy */
+  @keyframes bump { 0%{transform:scale(1)} 35%{transform:scale(1.045) translateY(2px)} 70%{transform:scale(.985)} 100%{transform:scale(1)} }
+  @keyframes glow { 0%{filter:drop-shadow(0 0 0 rgba(224,169,61,0))} 30%{filter:drop-shadow(0 0 22px rgba(224,169,61,.75))} 100%{filter:drop-shadow(0 0 0 rgba(224,169,61,0))} }
+  @keyframes rise { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
+  @keyframes drop { from{opacity:0;transform:translateY(-10px)} to{opacity:1;transform:none} }
+}
+
+/* ---- Clay Shelf ---- */
+[data-theme="light"] {
+  --color-cream: #f6efe4; --color-cream-2: #efe5d5; --color-paper: #fffaf2;
+  --color-ink: #2a211c; --color-ink-2: #6b5d53; --color-ink-3: #75675c; --color-line: #e4d8c6;
+  --color-clay: #b5522d; --color-clay-2: #9a4526; --color-clay-text: #9a4526; --color-clay-soft: #f3d9cc;
+  --color-coin: #e0a93d; --color-coin-2: #805913; --color-coin-soft: #f9e9c3;
+  --color-leaf: #3d6547; --color-leaf-soft: #dceadf; --color-sky: #3b5c85; --color-sky-soft: #dbe5f1;
+  --color-shadow: rgba(42, 33, 28, .12); --paper-rule: none; --radius-xl: 1.25rem; --radius-2xl: 1.75rem;
+  color-scheme: light;
+}
+/* Dark: the same shelf with the lamp on. Clay and brass stay; paper turns warm dark. */
+[data-theme="dark"] {
+  --color-cream: #1c1714; --color-cream-2: #2a231e; --color-paper: #241e1a;
+  --color-ink: #f3ebe0; --color-ink-2: #c3b6a9; --color-ink-3: #9d9083; --color-line: #3a312b;
+  --color-clay: #d0704a; --color-clay-2: #c4613a; --color-clay-text: #e8a48a; --color-clay-soft: #3d2419;
+  --color-coin: #e0a93d; --color-coin-2: #e3b258; --color-coin-soft: #3a2d16;
+  --color-leaf: #8fc39b; --color-leaf-soft: #1f3326; --color-sky: #93b3d9; --color-sky-soft: #1e2b3a;
+  --color-shadow: rgba(0, 0, 0, .45); --paper-rule: none; --radius-xl: 1.25rem; --radius-2xl: 1.75rem;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-cream: #1c1714; --color-cream-2: #2a231e; --color-paper: #241e1a;
+    --color-ink: #f3ebe0; --color-ink-2: #c3b6a9; --color-ink-3: #9d9083; --color-line: #3a312b;
+    --color-clay: #d0704a; --color-clay-2: #c4613a; --color-clay-text: #e8a48a; --color-clay-soft: #3d2419;
+    --color-coin: #e0a93d; --color-coin-2: #e3b258; --color-coin-soft: #3a2d16;
+    --color-leaf: #8fc39b; --color-leaf-soft: #1f3326; --color-sky: #93b3d9; --color-sky-soft: #1e2b3a;
+    --color-shadow: rgba(0, 0, 0, .45);
+    color-scheme: dark;
+  }
+}
+
+/* ---- Childhood Ledger: ruled notebook paper, ink blue, pencil grey, brass. Flat, smaller corners. ---- */
+[data-palette="ledger"] {
+  --color-cream: #f7f4ec; --color-cream-2: #ece7db; --color-paper: #fffdf8;
+  --color-ink: #1f2430; --color-ink-2: #4b5266; --color-ink-3: #66707f; --color-line: #cfd6e4;
+  --color-clay: #2b3a67; --color-clay-2: #22304f; --color-clay-text: #2b3a67; --color-clay-soft: #e3e8f3;
+  --color-coin: #e0a93d; --color-coin-2: #805913; --color-coin-soft: #f9e9c3;
+  --color-leaf: #3d6547; --color-leaf-soft: #dceadf; --color-sky: #3b5c85; --color-sky-soft: #dbe5f1;
+  --color-shadow: transparent; --radius-xl: .5rem; --radius-2xl: .75rem;
+  --paper-rule: repeating-linear-gradient(to bottom, transparent 0 31px, rgba(43, 58, 103, .10) 31px 32px);
+  color-scheme: light;
+}
+[data-palette="ledger"][data-theme="dark"] {
+  --color-cream: #161a24; --color-cream-2: #1f2431; --color-paper: #1b202b;
+  --color-ink: #eef0f5; --color-ink-2: #b9c0cf; --color-ink-3: #98a1b3; --color-line: #2f3747;
+  --color-clay: #7f95d1; --color-clay-2: #6b82c4; --color-clay-text: #a9bbea; --color-clay-soft: #232c45;
+  --color-coin: #e0a93d; --color-coin-2: #e3b258; --color-coin-soft: #3a2d16;
+  --color-leaf: #8fc39b; --color-leaf-soft: #1f3326; --color-sky: #93b3d9; --color-sky-soft: #1e2b3a;
+  --color-shadow: transparent; --radius-xl: .5rem; --radius-2xl: .75rem;
+  --paper-rule: repeating-linear-gradient(to bottom, transparent 0 31px, rgba(127, 149, 209, .14) 31px 32px);
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) {
+  [data-palette="ledger"]:not([data-theme="light"]) {
+    --color-cream: #161a24; --color-cream-2: #1f2431; --color-paper: #1b202b;
+    --color-ink: #eef0f5; --color-ink-2: #b9c0cf; --color-ink-3: #98a1b3; --color-line: #2f3747;
+    --color-clay: #7f95d1; --color-clay-2: #6b82c4; --color-clay-text: #a9bbea; --color-clay-soft: #232c45;
+    --color-coin: #e0a93d; --color-coin-2: #e3b258; --color-coin-soft: #3a2d16;
+    --color-leaf: #8fc39b; --color-leaf-soft: #1f3326; --color-sky: #93b3d9; --color-sky-soft: #1e2b3a;
+    --color-shadow: transparent;
+    --paper-rule: repeating-linear-gradient(to bottom, transparent 0 31px, rgba(127, 149, 209, .14) 31px 32px);
+    color-scheme: dark;
+  }
+}
+
+/* ---- Quiet Piggy Bank: stone, fog, ash. Almost no chroma except the coin. Flat, generous corners. ---- */
+[data-palette="quiet"] {
+  --color-cream: #f5f4f1; --color-cream-2: #eceae5; --color-paper: #fbfaf8;
+  --color-ink: #2a2825; --color-ink-2: #625d57; --color-ink-3: #706b65; --color-line: #e2dfd9;
+  --color-clay: #6e5a50; --color-clay-2: #5a4941; --color-clay-text: #6e5a50; --color-clay-soft: #ece5e0;
+  --color-coin: #d9b25c; --color-coin-2: #7a5f1e; --color-coin-soft: #f3ecd9;
+  --color-leaf: #4f6b57; --color-leaf-soft: #e3e9e4; --color-sky: #526a86; --color-sky-soft: #e2e8ef;
+  --color-shadow: transparent; --paper-rule: none; --radius-xl: 1rem; --radius-2xl: 1.25rem;
+  color-scheme: light;
+}
+[data-palette="quiet"][data-theme="dark"] {
+  --color-cream: #171615; --color-cream-2: #222020; --color-paper: #1d1b1a;
+  --color-ink: #ecebe8; --color-ink-2: #b8b4ae; --color-ink-3: #97928b; --color-line: #34312e;
+  --color-clay: #b09a8d; --color-clay-2: #9f897c; --color-clay-text: #cdb9ad; --color-clay-soft: #2d2622;
+  --color-coin: #d9b25c; --color-coin-2: #dcb968; --color-coin-soft: #332b18;
+  --color-leaf: #9dbfa5; --color-leaf-soft: #202a23; --color-sky: #9db3cc; --color-sky-soft: #1f2732;
+  --color-shadow: transparent; --paper-rule: none; --radius-xl: 1rem; --radius-2xl: 1.25rem;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) {
+  [data-palette="quiet"]:not([data-theme="light"]) {
+    --color-cream: #171615; --color-cream-2: #222020; --color-paper: #1d1b1a;
+    --color-ink: #ecebe8; --color-ink-2: #b8b4ae; --color-ink-3: #97928b; --color-line: #34312e;
+    --color-clay: #b09a8d; --color-clay-2: #9f897c; --color-clay-text: #cdb9ad; --color-clay-soft: #2d2622;
+    --color-coin: #d9b25c; --color-coin-2: #dcb968; --color-coin-soft: #332b18;
+    --color-leaf: #9dbfa5; --color-leaf-soft: #202a23; --color-sky: #9db3cc; --color-sky-soft: #1f2732;
+    --color-shadow: transparent;
+    color-scheme: dark;
+  }
+}
+
+html { scroll-padding-top: 4rem; }
+body { @apply bg-cream text-ink font-sans antialiased; background-image: var(--paper-rule); background-attachment: local; font-feature-settings: "tnum" 1; }
+.skip { @apply sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:rounded-full focus:bg-ink focus:text-cream focus:px-4 focus:py-2 focus:text-sm focus:font-semibold; }
+::selection { background: color-mix(in srgb, var(--color-coin) 45%, transparent); color: var(--color-ink); }
+:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 3px; border-radius: 4px; }
+input, textarea, select { caret-color: var(--color-clay); accent-color: var(--color-clay); }
+input[type="date"]::-webkit-calendar-picker-indicator { opacity: .6; }
+dialog::backdrop { background: rgba(20, 14, 10, .55); backdrop-filter: blur(2px); } /* fixed: ink flips in dark */
+@media (prefers-reduced-motion: reduce) { *, ::before, ::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+
+@utility btn { @apply inline-flex items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold transition active:scale-[.98] disabled:opacity-40 disabled:pointer-events-none; }
+
+@layer components {
+  .num { font-variant-numeric: tabular-nums; }
+  .card { @apply bg-paper rounded-2xl border border-line; box-shadow: 0 1px 0 var(--color-shadow), 0 10px 24px -14px var(--color-shadow); }
+  .btn-primary { @apply btn bg-clay text-paper hover:bg-clay-2; }
+  .btn-danger { @apply btn hover:opacity-90; background: #2a211c; color: #f3ebe0; }
+  .btn-ghost { @apply btn bg-transparent text-ink-2 hover:bg-cream-2 hover:text-ink; }
+  .btn-soft { @apply btn bg-cream-2 text-ink hover:bg-line; }
+  .btn-icon { @apply inline-grid place-items-center h-11 w-11 rounded-full text-ink-2 hover:bg-cream-2 hover:text-ink transition; }
+  .input { @apply w-full rounded-xl border border-line bg-paper px-3 py-2 text-base text-ink placeholder:text-ink-3 focus:outline-none focus:ring-2 focus:ring-clay/30 focus:border-clay; }
+  .label { @apply block text-sm font-semibold text-ink-2 mb-1; }
+  .caption { @apply text-sm text-ink-3; }
+}
+
+.coin-fly { position: fixed; z-index: 60; pointer-events: none; width: 22px; height: 22px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #f7d77a, #e0a93d 60%, #b8832a); box-shadow: 0 2px 6px rgba(42,33,28,.35), inset 0 0 0 2px rgba(255,255,255,.35); }

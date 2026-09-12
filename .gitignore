@@ -1,0 +1,46 @@
+# Dependencies and build output
+node_modules
+dist
+dist-ssr
+*.tsbuildinfo
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Local environment and machine-specific config
+*.local
+.env
+.env.*
+!.env.example
+
+# Editor and OS
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# End-to-end test artifacts (screenshots, evidence, Playwright output)
+e2e/shots
+e2e/critique
+test-results
+playwright-report
+
+# Claude Code: per-machine permission grants
+.claude/settings.local.json
+
+# Impeccable: caches and the live-mode inject journal are per machine.
+# PRODUCT.md, DESIGN.md, .impeccable/design.json, .impeccable/live/config.json
+# and critique snapshots are project artifacts and stay tracked.
+.impeccable/hook.cache.json
+.impeccable/live/inject-journal.json

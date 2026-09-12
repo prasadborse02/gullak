@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-12T21:30:00Z",
+  "title": "Design System: Gullak",
+  "extensions": {
+    "colorMeta": {
+      "terracotta-clay": { "role": "primary", "displayName": "Terracotta Clay", "canonical": "#b5522d", "tonalRamp": ["#2a1109", "#4d1f10", "#712e18", "#953f22", "#b5522d", "#d0784f", "#e6a487", "#f3d9cc"] },
+      "brass-coin": { "role": "secondary", "displayName": "Brass Coin", "canonical": "#e0a93d", "tonalRamp": ["#2b1f08", "#4e390f", "#6f5215", "#8f6a1c", "#b5872b", "#e0a93d", "#efc978", "#f9e9c3"] },
+      "cream-paper": { "role": "neutral", "displayName": "Cream Paper", "canonical": "#f6efe4", "tonalRamp": ["#1c1714", "#2a231e", "#3a312b", "#6b5d53", "#a3958a", "#d8ccbb", "#efe5d5", "#f6efe4"] },
+      "charcoal-ink": { "role": "neutral", "displayName": "Charcoal Ink", "canonical": "#2a211c", "tonalRamp": ["#2a211c", "#3d322b", "#55483f", "#6b5d53", "#8a7b70", "#a3958a", "#c3b6a9", "#f3ebe0"] },
+      "ledger-ink-blue": { "role": "primary", "displayName": "Ink Blue (Ledger)", "canonical": "#2b3a67", "tonalRamp": ["#0f1526", "#1a2340", "#22304f", "#2b3a67", "#4a5c94", "#7f95d1", "#b3c1e6", "#e3e8f3"] },
+      "quiet-ash": { "role": "primary", "displayName": "Ash (Quiet)", "canonical": "#6e5a50", "tonalRamp": ["#1d1b1a", "#2d2622", "#463a33", "#5a4941", "#6e5a50", "#8f7a6d", "#b09a8d", "#ece5e0"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Page headings and the goal title. One per screen." },
+      "headline": { "displayName": "Headline", "purpose": "The receipt heading and dialog titles." },
+      "numeral": { "displayName": "Numeral", "purpose": "Coin counts and rupee balance. Always tabular." },
+      "caption": { "displayName": "Caption", "purpose": "Metadata and stat labels. The lightest text allowed." }
+    },
+    "shadows": [
+      { "name": "shelf-lift", "value": "0 1px 0 var(--color-shadow), 0 10px 24px -14px var(--color-shadow)", "purpose": "Every card in the Clay Shelf palette. Transparent shadow token in Ledger and Quiet." },
+      { "name": "dialog", "value": "0 25px 50px -12px rgba(0,0,0,.25)", "purpose": "Confirm and theme dialogs over the fixed dark scrim." }
+    ],
+    "motion": [
+      { "name": "bump", "value": "420ms cubic-bezier(.34,1.56,.64,1)", "purpose": "The pot settling as a coin lands. Deliberate overshoot." },
+      { "name": "glow", "value": "900ms ease-out", "purpose": "Brass drop-shadow pulse on checkpoint and at 85% full." },
+      { "name": "rise", "value": "320ms cubic-bezier(.16,1,.3,1)", "purpose": "Cards, dialogs, and phone toasts entering." },
+      { "name": "coin-flight", "value": "620ms cubic-bezier(.3,.1,.5,1) along a quadratic arc", "purpose": "Web Animations API; skipped under prefers-reduced-motion." },
+      { "name": "fill", "value": "700ms cubic-bezier(.2,.8,.2,1)", "purpose": "Pot level and checkpoint track width." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" }
+    ],
+    "palettes": [
+      { "id": "clay", "name": "The Clay Shelf", "attribute": null, "elevation": "shelf-lift", "radius2xl": "1.75rem" },
+      { "id": "ledger", "name": "The Childhood Ledger", "attribute": "data-palette=\"ledger\"", "elevation": "flat", "radius2xl": "0.75rem", "paperRule": "repeating-linear-gradient(to bottom, transparent 0 31px, rgba(43,58,103,.10) 31px 32px)" },
+      { "id": "quiet", "name": "The Quiet Piggy Bank", "attribute": "data-palette=\"quiet\"", "elevation": "flat", "radius2xl": "1.25rem" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one loud action per viewport: Deposit, Create Gullak, Spend.",
+      "html": "<button class=\"ds-btn-primary\">Deposit coins</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--color-clay, #b5522d); color: var(--color-paper, #fffaf2); border: 0; border-radius: 9999px; padding: 10px 16px; font: 600 14px/1.4 Nunito, system-ui, sans-serif; cursor: pointer; transition: background .15s, transform .15s; } .ds-btn-primary:hover { background: var(--color-clay-2, #9a4526); } .ds-btn-primary:active { transform: scale(.98); } .ds-btn-primary:focus-visible { outline: 2px solid var(--color-ink, #2a211c); outline-offset: 3px; }"
+    },
+    {
+      "name": "Soft Button",
+      "kind": "button",
+      "refersTo": "button-soft",
+      "description": "Secondary actions: Add mini-goal, See what you finished.",
+      "html": "<button class=\"ds-btn-soft\">Add mini-goal</button>",
+      "css": ".ds-btn-soft { display: inline-flex; align-items: center; gap: 8px; background: var(--color-cream-2, #efe5d5); color: var(--color-ink, #2a211c); border: 0; border-radius: 9999px; padding: 10px 16px; font: 600 14px/1.4 Nunito, system-ui, sans-serif; cursor: pointer; transition: background .15s; } .ds-btn-soft:hover { background: var(--color-line, #e4d8c6); } .ds-btn-soft:focus-visible { outline: 2px solid var(--color-ink, #2a211c); outline-offset: 3px; }"
+    },
+    {
+      "name": "Icon Button",
+      "kind": "button",
+      "refersTo": "button-icon",
+      "description": "44px circle for mute, theme, reorder, remove. Drawn stroke icon, never a glyph.",
+      "html": "<button class=\"ds-btn-icon\" aria-label=\"Remove\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"><path d=\"M6 6l12 12M18 6L6 18\"/></svg></button>",
+      "css": ".ds-btn-icon { display: inline-grid; place-items: center; width: 44px; height: 44px; border: 0; border-radius: 9999px; background: transparent; color: var(--color-ink-2, #6b5d53); cursor: pointer; transition: background .15s, color .15s; } .ds-btn-icon:hover { background: var(--color-cream-2, #efe5d5); color: var(--color-ink, #2a211c); } .ds-btn-icon:focus-visible { outline: 2px solid var(--color-ink, #2a211c); outline-offset: 3px; }"
+    },
+    {
+      "name": "Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Paper resting on the shelf. Hairline plus a soft offset shadow in Clay; flat in Ledger and Quiet.",
+      "html": "<div class=\"ds-card\"><p class=\"ds-card-title\">Run a marathon in 2 hours</p><p class=\"ds-card-num\">150 <span>/ 320 coins</span></p></div>",
+      "css": ".ds-card { background: var(--color-paper, #fffaf2); border: 1px solid var(--color-line, #e4d8c6); border-radius: var(--radius-2xl, 1.75rem); padding: 20px; box-shadow: 0 1px 0 var(--color-shadow, rgba(42,33,28,.12)), 0 10px 24px -14px var(--color-shadow, rgba(42,33,28,.12)); color: var(--color-ink, #2a211c); } .ds-card-title { margin: 0; font: 600 18px/1.25 Fraunces, Georgia, serif; } .ds-card-num { margin: 6px 0 0; font: 700 24px/1 Nunito, system-ui, sans-serif; font-variant-numeric: tabular-nums; } .ds-card-num span { font-size: 14px; font-weight: 400; color: var(--color-ink-3, #75675c); }"
+    },
+    {
+      "name": "Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Paper field with a hairline; glows clay on focus.",
+      "html": "<input class=\"ds-input\" placeholder=\"Run a marathon in 2 hours\" />",
+      "css": ".ds-input { width: 100%; box-sizing: border-box; background: var(--color-paper, #fffaf2); color: var(--color-ink, #2a211c); border: 1px solid var(--color-line, #e4d8c6); border-radius: var(--radius-xl, 1.25rem); padding: 8px 12px; font: 400 16px/1.5 Nunito, system-ui, sans-serif; caret-color: var(--color-clay, #b5522d); } .ds-input::placeholder { color: var(--color-ink-3, #75675c); } .ds-input:focus { outline: none; border-color: var(--color-clay, #b5522d); box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-clay, #b5522d) 30%, transparent); }"
+    },
+    {
+      "name": "Pace Badge",
+      "kind": "chip",
+      "refersTo": "pace-badge",
+      "description": "Feedback, never guilt. Leaf ahead, sky on pace, terracotta behind, brass completed.",
+      "html": "<span class=\"ds-badge ds-badge-ahead\">Ahead of pace</span> <span class=\"ds-badge ds-badge-on\">On pace</span> <span class=\"ds-badge ds-badge-behind\">Behind pace</span>",
+      "css": ".ds-badge { display: inline-block; border-radius: 9999px; padding: 2px 10px; font: 600 12px/1.5 Nunito, system-ui, sans-serif; white-space: nowrap; } .ds-badge-ahead { background: var(--color-leaf-soft, #dceadf); color: var(--color-leaf, #3d6547); } .ds-badge-on { background: var(--color-sky-soft, #dbe5f1); color: var(--color-sky, #3b5c85); } .ds-badge-behind { background: var(--color-clay-soft, #f3d9cc); color: var(--color-clay-text, #9a4526); }"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "refersTo": "nav",
+      "description": "Text pills; the current page is ink on cream.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-item ds-nav-current\" href=\"#\">Gullaks</a><a class=\"ds-nav-item\" href=\"#\">Wallet</a><a class=\"ds-nav-item\" href=\"#\">Completed</a></nav>",
+      "css": ".ds-nav { display: flex; gap: 4px; } .ds-nav-item { border-radius: 9999px; padding: 6px 12px; font: 500 14px/1.4 Nunito, system-ui, sans-serif; color: var(--color-ink-2, #6b5d53); text-decoration: none; transition: background .15s, color .15s; } .ds-nav-item:hover { background: var(--color-cream-2, #efe5d5); color: var(--color-ink, #2a211c); } .ds-nav-current, .ds-nav-current:hover { background: var(--color-ink, #2a211c); color: var(--color-cream, #f6efe4); }"
+    },
+    {
+      "name": "Toast",
+      "kind": "custom",
+      "refersTo": "toast",
+      "description": "The word after the coin lands. Bottom-anchored; Undo variants hold 5s.",
+      "html": "<div class=\"ds-toast\"><span>+50 coins deposited</span></div> <div class=\"ds-toast\"><span>Removed Recovery run</span><button class=\"ds-toast-undo\">Undo</button></div>",
+      "css": ".ds-toast { display: inline-flex; align-items: center; gap: 12px; background: var(--color-ink, #2a211c); color: var(--color-cream, #f6efe4); border-radius: 9999px; padding: 8px 8px 8px 20px; font: 600 14px/1.4 Nunito, system-ui, sans-serif; box-shadow: 0 10px 15px -3px rgba(0,0,0,.2); margin: 4px; } .ds-toast-undo { border: 0; border-radius: 9999px; background: rgba(246,239,228,.15); color: inherit; padding: 4px 12px; font: inherit; cursor: pointer; } .ds-toast-undo:hover { background: rgba(246,239,228,.25); }"
+    },
+    {
+      "name": "The Pot",
+      "kind": "custom",
+      "refersTo": "gullak",
+      "description": "The one illustration. Fill level is earned/capacity; here shown at 55%.",
+      "html": "<svg class=\"ds-pot\" viewBox=\"0 0 200 200\" width=\"120\" height=\"120\" role=\"img\" aria-label=\"Gullak 55% full\"><defs><clipPath id=\"dsb\"><path d=\"M100 30 C150 30 176 66 176 108 C176 150 146 174 100 174 C54 174 24 150 24 108 C24 66 50 30 100 30 Z\"/></clipPath><linearGradient id=\"dsc\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#d97a52\"/><stop offset=\"1\" stop-color=\"#b3532d\"/></linearGradient><linearGradient id=\"dsg\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5d27a\"/><stop offset=\"1\" stop-color=\"#d59a2e\"/></linearGradient></defs><ellipse cx=\"100\" cy=\"178\" rx=\"46\" ry=\"8\" fill=\"#2a211c\" opacity=\".12\"/><rect x=\"66\" y=\"166\" width=\"68\" height=\"14\" rx=\"6\" fill=\"#8f4324\"/><path d=\"M100 30 C150 30 176 66 176 108 C176 150 146 174 100 174 C54 174 24 150 24 108 C24 66 50 30 100 30 Z\" fill=\"url(#dsc)\"/><g clip-path=\"url(#dsb)\"><rect x=\"0\" y=\"94\" width=\"200\" height=\"200\" fill=\"url(#dsg)\"/><path d=\"M100 30 C150 30 176 66 176 108 C176 150 146 174 100 174 C54 174 24 150 24 108 C24 66 50 30 100 30 Z\" fill=\"none\" stroke=\"#7a3518\" stroke-opacity=\".35\" stroke-width=\"6\"/></g><rect x=\"74\" y=\"20\" width=\"52\" height=\"16\" rx=\"6\" fill=\"#a84e2c\"/><rect x=\"86\" y=\"24\" width=\"28\" height=\"4\" rx=\"2\" fill=\"#2a211c\" opacity=\".7\"/></svg>",
+      "css": ".ds-pot { display: block; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Clay Shelf",
+    "overview": "Gullak is a terracotta pot on a warm shelf. Everything on screen is the paper, wood, brass, and clay around that pot. The pot is the only illustration and the only progress indicator. By day the shelf is cream paper; by night the same shelf is lamp-lit, so dark mode changes paper and ink but never clay or brass. Two sibling worlds, The Childhood Ledger (ruled paper, ink blue, flat, squared) and The Quiet Piggy Bank (stone, fog, ash, almost no chroma), share every component and differ only in tokens. The user chooses on first launch and can change from the header.",
+    "keyCharacteristics": [
+      "One illustration, the pot, drawn once and driven by a single number.",
+      "Two type families: Fraunces for display moments, Nunito for everything else.",
+      "Clay and brass are constant across all six palettes; paper and ink move.",
+      "Every text token clears 4.5:1 on its own surface.",
+      "One authored motion: coin leaves the button, arcs into the slot, the pot bumps, the sound lands.",
+      "Soft, tactile, certain components."
+    ],
+    "rules": [
+      { "name": "The Constant Clay Rule", "body": "The pot is terracotta and the coin is brass in every palette and mode. Themes change the room, never the object.", "section": "colors" },
+      { "name": "The One Loud Colour Rule", "body": "Clay appears on at most one primary action per viewport.", "section": "colors" },
+      { "name": "The Brass Means Earned Rule", "body": "Brass appears only where coins have landed. It never decorates.", "section": "colors" },
+      { "name": "The Two Faces Rule", "body": "Fraunces on headings, goal titles, the balance, and dialog titles. Nunito does all the work.", "section": "typography" },
+      { "name": "The No Eyebrow Rule", "body": "Nothing sits above a heading in small caps.", "section": "typography" },
+      { "name": "The Tabular Numbers Rule", "body": "Every coin count, rupee figure, date, and ratio uses tabular numerals.", "section": "typography" },
+      { "name": "The No Glow Rule", "body": "Shadows carry an offset and a blur. The only glow is the pot's brass pulse, and it is motion.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do let the pot be the only progress indicator.",
+      "Do keep the next deposit and its button inside the first phone viewport.",
+      "Do guard destructive actions with an in-app confirm or an undo toast.",
+      "Do keep every text token at or above 4.5:1 in all six palettes.",
+      "Do derive dates from local time and set numerals tabular.",
+      "Do use the shared classes and colour tokens; never a raw hex in a component.",
+      "Do scope new theme tokens under [data-palette] so picker previews stay live."
+    ],
+    "donts": [
+      "Don't add a progress bar, ring, or percentage. The pot is the bar.",
+      "Don't put a small-caps label above a heading.",
+      "Don't use unicode glyphs as icons.",
+      "Don't change the pot's terracotta or the coin's brass in any palette.",
+      "Don't nest a bordered card inside a card.",
+      "Don't call window.alert or window.confirm.",
+      "Don't reward anything but a deposit.",
+      "Don't play a sound outside the deposit chain; always honour mute."
+    ]
+  }
+}
