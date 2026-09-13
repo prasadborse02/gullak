@@ -5,7 +5,7 @@ import { Icon } from '../components/Icon'
 import { toast } from '../components/Toast'
 import { confirm } from '../components/Confirm'
 import { deposit } from '../deposit'
-import { bonusEarned, capacity, daysEarly, daysLeft, doneCount, earned, fmtDate, fmtStamp, fraction, nextAction, pace, rupee } from '../logic'
+import { bonusEarned, capacity, daysEarly, daysLeft, doneCount, earned, fmtDate, fmtStamp, fraction, nextAction, onTime, pace, rupee } from '../logic'
 import { actions, useStore } from '../store'
 import { go } from '../router'
 import type { MiniGoal } from '../types'
@@ -20,6 +20,7 @@ export function GoalDetail({ id }: { id: string }) {
 
   const cap = capacity(g), got = earned(g), left = daysLeft(g), next = nextAction(g), done = doneCount(g), total = g.miniGoals.length
   const full = !!g.completedAt
+  const missed = (awardedAt: string | null, at: number) => !awardedAt && (at <= done || !onTime(g)) // reached late, or unreachable now
 
   const undo = (m: MiniGoal) => {
     const r = actions.uncomplete(g.id, m.id)
@@ -42,8 +43,8 @@ export function GoalDetail({ id }: { id: string }) {
 
   const phases = [...new Set(g.miniGoals.map((m) => m.phase ?? ''))]
   const nodes = [
-    ...[...g.checkpoints].sort((a, b) => a.atCount - b.atCount).map((c) => ({ id: c.id, at: c.atCount, bonus: c.bonus, done: !!c.awardedAt, label: `${c.atCount}/${total}` })),
-    ...(g.completionBonus > 0 ? [{ id: 'full', at: total, bonus: g.completionBonus, done: !!g.completionBonusAwardedAt, label: 'Full' }] : []),
+    ...[...g.checkpoints].sort((a, b) => a.atCount - b.atCount).map((c) => ({ id: c.id, at: c.atCount, bonus: c.bonus, done: !!c.awardedAt, missed: missed(c.awardedAt, c.atCount), label: `${c.atCount}/${total}` })),
+    ...(g.completionBonus > 0 ? [{ id: 'full', at: total, bonus: g.completionBonus, done: !!g.completionBonusAwardedAt, missed: missed(g.completionBonusAwardedAt, total), label: 'Full' }] : []),
   ]
   const goalTx = s.transactions.filter((t) => t.goalId === g.id)
   const wallet = goalTx.reduce((a, t) => a + t.amount, 0)
@@ -119,7 +120,7 @@ export function GoalDetail({ id }: { id: string }) {
                   {n.done ? <Icon name="check" size={14} /> : <span className="num text-xs font-bold leading-none">{n.at}</span>}
                 </span>
                 <span className="num mt-1 text-xs text-ink-2 whitespace-nowrap">{n.label}</span>
-                <span className="num text-xs font-semibold text-coin-2">+{n.bonus}</span>
+                <span className={'num text-xs font-semibold ' + (n.missed ? 'text-ink-3 line-through' : 'text-coin-2')} title={n.missed ? 'Missed: bonuses only pay before the deadline' : undefined}>+{n.bonus}</span>
               </div>
             ))}
           </div>

@@ -164,7 +164,7 @@ dialog::backdrop { background: rgba(20, 14, 10, .55); backdrop-filter: blur(2px)
   .btn-danger { @apply btn hover:opacity-90; background: #2a211c; color: #f3ebe0; }
   .btn-ghost { @apply btn bg-transparent text-ink-2 hover:bg-cream-2 hover:text-ink; }
   .btn-soft { @apply btn bg-cream-2 text-ink hover:bg-line; }
-  .btn-icon { @apply inline-grid place-items-center h-11 w-11 rounded-full text-ink-2 hover:bg-cream-2 hover:text-ink transition; }
+  .btn-icon { @apply inline-grid place-items-center h-11 w-11 rounded-full text-ink-2 hover:bg-cream-2 hover:text-ink transition disabled:opacity-40 disabled:pointer-events-none; }
   .input { @apply w-full rounded-xl border border-line bg-paper px-3 py-2 text-base text-ink placeholder:text-ink-3 focus:outline-none focus:ring-2 focus:ring-clay/30 focus:border-clay; }
   .label { @apply block text-sm font-semibold text-ink-2 mb-1; }
   .caption { @apply text-sm text-ink-3; }

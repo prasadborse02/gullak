@@ -21,6 +21,9 @@ export const nextCheckpoint = (g: Goal) =>
 export const daysLeft = (g: Goal, now = new Date()) =>
   Math.ceil((new Date(g.deadline + 'T23:59:59').getTime() - now.getTime()) / DAY)
 
+/** Bonuses (checkpoints and completion) only pay while the goal is inside its timeline. Deposits always count. */
+export const onTime = (g: Goal, now = new Date()) => now.getTime() <= new Date(g.deadline + 'T23:59:59').getTime()
+
 /** Signed whole days between the completion stamp and the deadline: positive = early. */
 export const daysEarly = (g: Goal) =>
   g.completedAt ? Math.round((new Date(g.deadline + 'T23:59:59').getTime() - new Date(g.completedAt).getTime()) / DAY) : 0

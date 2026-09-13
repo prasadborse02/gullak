@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from 'react'
 import type { Checkpoint, Goal, MiniGoal, Reward, State, Transaction } from './types'
-import { doneCount, isState, migrate, setCurrencySymbol, uid } from './logic'
+import { doneCount, isState, migrate, onTime, setCurrencySymbol, uid } from './logic'
 
 const KEY = 'gullak:v1'
 
@@ -67,6 +67,7 @@ export type CompleteResult = {
   completionBonus: number
   finished: boolean
   hadCoins: boolean
+  late: boolean // past the deadline: coins deposited, no bonus
 }
 
 export const actions = {
@@ -119,7 +120,8 @@ export const actions = {
     })
   },
 
-  /** Marks complete, deposits coins, awards newly reached checkpoints and the completion bonus exactly once. */
+  /** Marks complete, deposits coins, awards newly reached checkpoints and the completion bonus exactly once.
+   *  Bonuses only pay inside the goal's timeline; a late completion still deposits its coins. */
   complete(goalId: string, miniId: string): CompleteResult | null {
     const g = state.goals.find((x) => x.id === goalId)
     const m = g?.miniGoals.find((x) => x.id === miniId)
@@ -128,10 +130,11 @@ export const actions = {
     const hadCoins = doneCount(g) > 0
     const miniGoals = g.miniGoals.map((x) => (x.id === miniId ? { ...x, completedAt: at } : x))
     const count = doneCount({ ...g, miniGoals })
-    const bonuses = g.checkpoints.filter((c) => !c.awardedAt && c.atCount <= count)
+    const late = !onTime(g)
+    const bonuses = late ? [] : g.checkpoints.filter((c) => !c.awardedAt && c.atCount <= count)
     const checkpoints = g.checkpoints.map((c) => (bonuses.includes(c) ? { ...c, awardedAt: at } : c))
     const finished = count === miniGoals.length
-    const payCompletion = finished && g.completionBonus > 0 && !g.completionBonusAwardedAt
+    const payCompletion = !late && finished && g.completionBonus > 0 && !g.completionBonusAwardedAt
     const txs = [
       { ...tx(state, 'deposit', m.points, m.title, goalId), miniId },
       ...bonuses.map((c) => ({ ...tx(state, 'bonus', c.bonus, `Checkpoint ${c.atCount}/${g.miniGoals.length} · ${g.title}`, goalId), bonusOf: c.id })),
@@ -152,7 +155,7 @@ export const actions = {
       ),
       transactions: [...txs, ...state.transactions],
     })
-    return { points: m.points, bonuses, completionBonus: payCompletion ? g.completionBonus : 0, finished, hadCoins }
+    return { points: m.points, bonuses, completionBonus: payCompletion ? g.completionBonus : 0, finished, hadCoins, late }
   },
 
   /** Take back a completion. The deposit and any bonus this completion had unlocked are removed from

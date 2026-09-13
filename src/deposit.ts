@@ -18,7 +18,7 @@ export function deposit(g: Goal, m: MiniGoal, from: HTMLElement, pot: Element | 
     } else if (res.bonuses.length) {
       if (pot) burstCoins(pot)
       toast(`Checkpoint · +${res.bonuses.reduce((a, c) => a + c.bonus, 0)} bonus coins`)
-    } else toast(`+${m.points} coins deposited`)
+    } else toast(`+${m.points} coins deposited${res.late ? ' · past deadline, no bonus' : ''}`)
   }
   if (pot) flyCoin(from.getBoundingClientRect(), pot, { onArrive: land })
   else land()

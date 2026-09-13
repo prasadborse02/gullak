@@ -1,6 +1,6 @@
 // Runs with: npm test
 import assert from 'node:assert/strict'
-import { bonusEarned, capacity, earned, fraction, isState, localDate, migrate, nextCheckpoint, pace, rupee, setCurrencySymbol } from './logic.ts'
+import { bonusEarned, capacity, earned, fraction, isState, localDate, migrate, nextCheckpoint, onTime, pace, rupee, setCurrencySymbol } from './logic.ts'
 import type { Goal } from './types.ts'
 
 const g: Goal = {
@@ -23,6 +23,8 @@ assert.equal(pace(g, new Date('2026-01-03T12:00:00')), 'on')      // 25% elapsed
 assert.equal(pace(g, new Date('2026-01-08T12:00:00')), 'behind')
 assert.equal(pace(g, new Date('2026-02-01')), 'overdue')
 assert.equal(pace({ ...g, completedAt: 'x' }), 'completed')
+assert.equal(onTime(g, new Date('2026-01-11T23:59:00')), true)  // deadline day still counts
+assert.equal(onTime(g, new Date('2026-01-12T00:00:01')), false) // bonus gate closes at midnight
 
 // Local date, not UTC: 00:40 on the 13th must be the 13th, whatever the zone.
 const d = new Date(2026, 8, 13, 0, 40)
